@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import './main.scss';
 import App from './app/App';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 /**
  * Base URL of the website.

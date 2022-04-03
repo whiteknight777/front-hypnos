@@ -29,7 +29,7 @@ function Home() {
                 <Input.Group compact className="group-input">
                     <Input 
                     placeholder="Rechercher"
-                    defaultValue="https://ant.design" />
+                    defaultValue="" />
                     <Button>Valider</Button>
                 </Input.Group>
                 </div>

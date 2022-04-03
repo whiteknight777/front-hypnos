@@ -3,12 +3,16 @@
   min-height: 100%;
 
   .sider-nav{
+    position: relative;
     .ant-layout-sider-children {
+      position: sticky;
+      top: 0;
       display: flex;
       flex-direction: column;
       gap: 20px;
       background-color: white;
       min-height: 100vh;
+      height:100px;
       .logo{
         background-image: url('../../assets/logo.png');
         background-color: white;

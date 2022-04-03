@@ -1,0 +1,29 @@
+.facility-box{
+    .ant-card-meta-detail{
+        .ant-card-meta-title{
+            font-size: 1rem;
+        }
+        .ant-card-meta-description{
+            .facility-details{
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                .infos{
+                    flex-grow: 3;
+                    .desc{
+                    }
+                    .sub-infos{
+                        display: flex;
+                        flex-flow: column;
+                    }
+                }
+                .show-btn{
+                    flex-grow: 1;
+                    padding: 0 40px;
+                    min-width: 180px;
+                    max-width: 180px;
+                }
+            }
+        }
+    }   
+}
