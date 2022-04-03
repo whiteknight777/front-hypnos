@@ -1,0 +1,37 @@
+.ant-layout, .ant-layout {
+  box-sizing: border-box;
+  min-height: 100%;
+
+  .sider-nav{
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background-color: white;
+      min-height: 100vh;
+      .logo{
+        background-image: url('../../assets/logo.png');
+        background-color: white;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin: 20px 20px 0;
+        flex-grow: 1;
+        max-height: 40px;
+      }
+      .main-nav{
+        flex-grow: 11;
+        .ant-menu-item .nav-icon {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+
+  .content-layout{
+    .layout-background {
+      margin: 7px 16px;
+      padding: 24px;
+      min-height: 280px;
+    }
+  }
+}

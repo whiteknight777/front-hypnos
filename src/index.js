@@ -1,7 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import * as ReactDOMClient from 'react-dom/client';
 import './main.scss';
 import App from './app/App';
+import 'antd/dist/antd.css';
 
 /**
  * Base URL of the website.
@@ -10,9 +11,9 @@ import App from './app/App';
  */
 const { PUBLIC_URL } = process.env;
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App basename={PUBLIC_URL} />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+
+// Create a root.
+const root = ReactDOMClient.createRoot(container);
+
+root.render(<App basename={PUBLIC_URL} />);

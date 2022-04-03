@@ -1,0 +1,36 @@
+.home-content{
+    .main-title{
+        font-size: 20px;
+        margin-top: 0;
+        padding-left: 6px;
+    }
+    .description{
+        line-height: 1.6;
+        padding-left: 6px;
+    }
+    .search-content{
+        display: flex;
+        flex-flow: row;
+        .group-input{
+            width: 100%;
+            display: flex;
+            flex-flow: row;
+            gap: 10px;
+            &::before{
+                display: none;
+            }
+            &::after{
+                display: none;
+            }
+            .ant-input{
+                max-width: calc(100% - 100px);
+                border-radius: 20px;
+                padding-left: 1rem;
+            }
+            .ant-btn{
+                border-radius: 20px;
+                min-width: 130px;
+            }
+        }
+    }
+}
