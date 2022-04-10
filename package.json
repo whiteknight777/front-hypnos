@@ -1,18 +1,32 @@
 {
   "name": "front-hypnos",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "front hypnos",
+  "author": "desirearra",
+  "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "15.8.0",
+    "npm": "7.5.1"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "antd": "^4.19.3",
+    "antd": "^4.19.5",
+    "axios": "^0.26.1",
+    "formik": "^2.2.9",
+    "formik-antd": "^2.0.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
+    "react-moment": "^1.1.2",
+    "react-query": "4.0.0-beta.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "sass": "^1.49.11",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }

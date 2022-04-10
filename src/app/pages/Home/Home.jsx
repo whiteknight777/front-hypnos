@@ -3,7 +3,7 @@ import {
     Input,
     Button,
   } from 'antd';
-import CardFacilities from '../../components/Facilities/CardFacilities';
+import CardFacility from '../../components/Facility/Facility';
 import './Home.scss'
 
 function Home() {
@@ -30,12 +30,12 @@ function Home() {
                     <Input 
                     placeholder="Rechercher"
                     defaultValue="" />
-                    <Button>Valider</Button>
+                    <Button size="large">Valider</Button>
                 </Input.Group>
                 </div>
                 <div className="facilities-list">
                 {facilities.map((facility, k) => (
-                    <CardFacilities key={`etablissement-${k}`} loading={loading} facility={facility} />
+                    <CardFacility key={`etablissement-${k}`} loading={loading} facility={facility} />
                 ))}
                 </div>
             </section>

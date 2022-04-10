@@ -3,18 +3,23 @@ import {
     Input,
     Button,
     PageHeader,
-    Divider 
+    Divider,
+    Drawer,
+    Form,
+    Alert
   } from 'antd';
 import { useParams, useNavigate } from "react-router-dom";
 import {MdKeyboardArrowLeft} from 'react-icons/md'
-import './Facility.scss'
-import CardRooms from '../../components/Rooms/Rooms';
+import './Facilities.scss'
+import CardRoom from '../../components/Room/Room';
 
-function Facility() {
+function Facilities() {
     let params = useParams();
     let navigate = useNavigate();
     const rooms = [1,2,3,4,5,6,7]
     const [loading, setLoading] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+    const [form] = Form.useForm();
 
     React.useState(() => {
       setTimeout(() =>{
@@ -29,10 +34,12 @@ function Facility() {
                 </span>
                 <PageHeader
                     className="page-header"
-                    // onBack={() => navigate('/')}
                     title={<h2 className="main-title">Etablissement {params.id}</h2>}
                     extra={[
-                      <Button key="1">
+                      <Button key="1" size="large"
+                      onClick={() => {
+                        setOpen(true)
+                      }}>
                         Nous contacter
                       </Button>,
                     ]}
@@ -63,15 +70,65 @@ function Facility() {
                           <Input 
                           placeholder="Rechercher"
                           defaultValue="" />
-                          <Button>Valider</Button>
+                          <Button size="large">Valider</Button>
                       </Input.Group>
                     </div>
                     {rooms.map((room, k) => (
-                    <CardRooms key={`suite-${k}`} loading={loading} room={room} />
+                    <CardRoom key={`suite-${k}`} loading={loading} room={room} />
                     ))}
                 </div>
         </section>
+        <Drawer
+        title={`Contacter l'établissement ${params.id}`}
+        placement={"right"}
+        width={700}
+        onClose={() => setOpen(false)}
+        visible={open}
+      >
+        <section className="contact-content">
+            <p className="description">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+              non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
+            </p>
+            <div className="contact-form">
+            <Alert
+                className="alert-box"
+                message="Success Tips"
+                description="Detailed description and advice about successful copywriting."
+                type="success"
+                showIcon
+            />
+              <Form
+              className="form-horizontal"
+              layout={'vertical'}
+              form={form}
+              initialValues={{ layout: 'vertical' }}
+              >
+                <Form.Item label="Nom">
+                    <Input placeholder="Nom" />
+                </Form.Item>
+                <Form.Item label="Prenom(s)">
+                    <Input placeholder="Prenom(s)" />
+                </Form.Item>
+                <Form.Item label="Email">
+                    <Input placeholder="moi@societe.com" />
+                </Form.Item>
+                <Form.Item label="Sujet">
+                    <Input placeholder="selectionnez un sujet" />
+                </Form.Item>
+                <Form.Item label="Message">
+                    <Input.TextArea rows={4} />
+                </Form.Item>
+                  <Form.Item>
+                      <Button type="primary" size="large" shape="round" block>Envoyer message</Button>
+                  </Form.Item>
+              </Form>
+            </div>
+        </section>
+      </Drawer>
     </>);
 }
 
-export default Facility;
+export default Facilities;

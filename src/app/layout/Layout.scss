@@ -2,6 +2,30 @@
   box-sizing: border-box;
   min-height: 100%;
 
+  .header-layout{
+    background: inherit;
+    .container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80px;
+      .actions-group{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 290px;
+        .connexion-btn, .subscription-btn{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          .nav-icon{
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+
   .sider-nav{
     position: relative;
     .ant-layout-sider-children {
@@ -24,8 +48,15 @@
       }
       .main-nav{
         flex-grow: 11;
-        .ant-menu-item .nav-icon {
-          font-size: 1.2rem;
+        .ant-menu-item {
+          .ant-menu-title-content{
+            a{ 
+              font-size: 1rem
+            }
+          }
+          .nav-icon {
+            font-size: 1.2rem;
+          }
         }
       }
     }
@@ -34,7 +65,7 @@
   .content-layout{
     .layout-background {
       margin: 7px 16px;
-      padding: 24px;
+      padding: 24px 35px;
       min-height: 280px;
     }
   }

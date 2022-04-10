@@ -1,0 +1,116 @@
+.room-box{
+    display: flex;
+    .ant-card-cover{
+        flex-grow: 1;
+        .responsive-img{
+            max-height: 235px;
+        }
+        .ant-skeleton-element {
+            width: 100%;
+            .skeleton-img{
+                min-width: 180px;
+                min-height: 159px;
+            }
+        }
+    }
+    .ant-card-body{
+        flex-grow: 11;
+        width: 100%;
+        padding-bottom: 0;
+    }
+    .ant-card-meta-detail{
+        .ant-card-meta-title{
+            font-size: 1.2rem;
+        }
+        .ant-card-meta-description{
+            .room-details{
+                display: flex;
+                flex-flow: row;
+                align-items: center;
+                .infos{
+                    flex-grow: 3;
+                    .desc{
+                    }
+                    .sub-infos{
+                        display: flex;
+                        flex-flow: column;
+                        padding-left: 0;
+                        .price{
+                            font-size: 1.2rem;
+                            b{
+                                font-size: 1rem;
+                            }
+                        }
+                    }
+                }
+                .show-btn{
+                    flex-grow: 1;
+                    padding: 0 40px;
+                    min-width: 180px;
+                    max-width: 180px;
+                }
+            }
+        }
+    }
+}
+
+.drawer-content{
+    font-size: 1rem;
+    .container{
+        margin-top: 2.5rem;
+    }
+    .sub-infos{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .price{
+            font-size: 1.2rem;
+            b{
+                font-size: 1rem;
+            }
+        }
+    }
+    .services-list{
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        .item-service{
+            list-style: none;
+            position: relative;
+            &::before{
+                position: absolute;
+                content: "";
+                width: 14px;
+                height: 10px;
+                border-left: 4px solid;
+                border-bottom: 3px solid;
+                transform: rotate(-54deg);
+                left: -25px;
+                bottom: 8px;
+            }
+        }
+    }
+    .alert-box{
+        margin: 1rem 0
+    }
+    .form-container{
+        .form-horizontal{
+            display: flex;
+            align-items: center;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            .ant-form-item{
+                width: calc(55% - 50px);
+                .ant-btn{
+                    width: 100%;
+                }
+            }
+            .ant-form-item:last-child{
+                width: 100%;
+                .ant-btn{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

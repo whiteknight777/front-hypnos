@@ -16,4 +16,9 @@ code {
   min-height: 100vh;
   font-family: 'Roboto', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+    font-size: 16px;
+}
+
+input.ant-input{
+  padding: 0.5rem;
 }

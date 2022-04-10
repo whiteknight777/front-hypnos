@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'antd';
 import { useNavigate } from "react-router-dom";
-import './Facilities.scss'
+import './Facility.scss'
 
 const { Meta } = Card;
 
@@ -18,6 +18,7 @@ const CardContent = ({id, description, address, city}) => {
       </div>
       <Button 
       shape="round" 
+      size="large"
       className="show-btn"
       onClick={() => {
         navigate(`/etablissement/${id}`)
@@ -27,7 +28,7 @@ const CardContent = ({id, description, address, city}) => {
   )
 }
 
-function CardFacilities({loading, facility}) {
+function CardFacility({loading, facility}) {
     return (
         <Card 
         className="facility-box" 
@@ -49,4 +50,4 @@ function CardFacilities({loading, facility}) {
     );
 }
 
-export default CardFacilities;
+export default CardFacility;

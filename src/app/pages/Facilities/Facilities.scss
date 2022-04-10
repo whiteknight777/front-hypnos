@@ -33,6 +33,7 @@
             padding-left: 6px;
         }
         .description{
+            font-size: 1rem;
             line-height: 1.6;
             padding-left: 6px;
         }
@@ -67,5 +68,22 @@
     Button.ant-btn.ant-btn-default{
         border-radius: 20px;
         min-width: 130px;
+    }
+}
+
+.ant-drawer-content{
+    .ant-drawer-body{
+        .contact-content{
+            .description{
+                font-size: 1rem;
+                line-height: 1.6;
+                padding-left: 6px;
+            }
+            .contact-form{
+                .alert-box{
+                    margin: 1rem 0
+                }
+            }
+        }
     }
 }

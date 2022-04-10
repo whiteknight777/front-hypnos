@@ -14,12 +14,6 @@ function Nav() {
             <Menu.Item key="1" icon={<RiLayout2Line className="nav-icon" />}>
               <Link to="/">Accueil</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<RiRotateLockLine className="nav-icon" />}>
-              <Link to="/connexion">Connexion</Link>
-            </Menu.Item>
-            <Menu.Item key="3" icon={<RiLoginBoxLine className="nav-icon"/>}>
-              <Link to="/inscription">Inscription</Link>
-            </Menu.Item>
           </Menu>
         </Sider>
     );

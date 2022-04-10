@@ -2,6 +2,10 @@ import React from 'react';
 import * as ReactDOMClient from 'react-dom/client';
 import './main.scss';
 import App from './app/App';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
 import 'antd/dist/antd.min.css';
 
 /**
@@ -16,4 +20,11 @@ const container = document.getElementById('root');
 // Create a root.
 const root = ReactDOMClient.createRoot(container);
 
-root.render(<App basename={PUBLIC_URL} />);
+ // Create a client for request
+ const queryClient = new QueryClient()
+
+root.render(
+<QueryClientProvider client={queryClient}>
+    <App basename={PUBLIC_URL} />
+</QueryClientProvider>
+);
