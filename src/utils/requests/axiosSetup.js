@@ -20,7 +20,6 @@ const Axios = axios.create({
   If you use the interceptor below, then make sure you
   return an err message from your express route:
 
-  res.status(404).json({ err: "You are not authorized to do that." })
 */
 Axios.interceptors.response.use(
     (response) => response,

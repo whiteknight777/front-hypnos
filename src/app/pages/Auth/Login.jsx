@@ -1,47 +1,43 @@
 import React from 'react';
-import { Alert, Form, Input, Button, Spin } from 'antd';
-import {
-    useMutation
-} from 'react-query';
+import { Alert, Form, Input, Spin } from 'antd';
+// import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import { LoginRequest } from '../../../utils/requests/auth';
+import { UserContext, ActionTypes } from '../../../contexts/userProvider';
 import LoginSchema from '../../validatorSchema/loginSchema'
 import './Login.scss'
 
 function Login() {
     const [form] = Form.useForm();
     const navigate = useNavigate();
-    const _isMounted = React.useRef(false);
     const initialValues = {
         email: 'admin@demo.com',
         password: ''
     }
+    const { dispatch } = React.useContext(UserContext);
 
     // Mutations
-    const mutation = useMutation(LoginRequest)
-
-    React.useEffect(() => () => { // ComponentWillUnmount in Class Component
-        _isMounted.current = true;
-    }
-    // eslint-disable-next-line
-    , []);
-
+    // const mutation = useMutation(LoginRequest)
 
     const formik = useFormik({
         initialValues,
         validationSchema: LoginSchema,
-        onSubmit: async (values) => {
+        onSubmit: async (values, { setStatus, setSubmitting }) => {
             const {email, password} = values
+            setSubmitting(true)
             try {
-                const data = await mutation.mutateAsync({email, password})
-                console.log(data)
+                const response = await LoginRequest({email, password})
+                const {data} = response;
+                console.log(response.data)
+                dispatch({ type: ActionTypes.login, accessToken: data.accessToken });
                 navigate('/', { replace: true });
-              } catch (error) {
-                console.error(error.response)
-              } finally {
-                console.log('done')
-              }
+            } catch (error) {
+                console.error(error.message)
+                setStatus(error.response?.data?.error || error.message)
+            }finally{
+                setSubmitting(false)
+            }
         }
     });
 
@@ -49,11 +45,11 @@ function Login() {
     <div className="login-content">
         <h2 className="title">Espace de connexion</h2>
         <div className="form-container">
-            {mutation.error && (
+            {formik.status && (
                 <Alert
                     className="alert-box"
                     message="Erreur"
-                    description={mutation.error.response?.data?.error || mutation.error.message}
+                    description={formik.status}
                     type="error"
                     showIcon
                 />
@@ -89,17 +85,15 @@ function Login() {
                     ) : null}
                 </Form.Item>
                 <Form.Item>
-                    <Button 
-                    type="primary" 
-                    size="large" 
-                    shape="round" 
-                    block
+                    <button 
+                    type="submit" 
+                    className="submit-btn"
                     onClick={formik.handleSubmit}
-                    disabled={mutation.isLoading}
+                    disabled={formik.isSubmitting}
                     >
                         Connexion
-                        {mutation.isLoading && <Spin className="loader" />}
-                    </Button>
+                        {formik.isSubmitting && <Spin className="loader" />}
+                    </button>
                 </Form.Item>
             </Form>
         </div>

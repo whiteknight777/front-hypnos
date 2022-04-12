@@ -21,4 +21,5 @@ export const ActionTypes = {
     login: 'Login',
     logout: 'Logout',
     register: 'Register',
+    userLoaded: 'UserLoaded',
 };

@@ -21,11 +21,18 @@
                     color: rgb(219, 22, 22);
                 }
             }
-            button {
+            .submit-btn {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
+                width: 100%;
+                border-radius: 20px;
+                padding: 8px 0;
+                cursor: pointer;
+                border: #1890ff solid 2px;
+                background-color: white;
+                color: #1890ff;
                 .loader{
                     display: flex;
                     align-items: center;
