@@ -1,10 +1,10 @@
 import React from 'react';
 import { Drawer, Rate, Divider, Form, Input, Button, Alert, DatePicker, Space} from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 import './Room.scss'
 import Slider from '../Slider/Slider';
 
-function RoomDetails({id, onClose, visible}) {
+function RoomDetails({room, onClose, visible}) {
     const roomPictures = [
       {src: "https://via.placeholder.com/800x400", alt: "pic1"},
       {src: "https://via.placeholder.com/800x400", alt: "pic2"},
@@ -15,13 +15,9 @@ function RoomDetails({id, onClose, visible}) {
     const [form] = Form.useForm();
 
 
-    const onChange = (date, dateString) => {
-        console.log(date, dateString);
-    }
-
     return ( 
         <Drawer
-        title={`Suite ${id}`}
+        title={`${room.title}`}
         placement={"right"}
         width={800}
         onClose={onClose}
@@ -36,15 +32,10 @@ function RoomDetails({id, onClose, visible}) {
         <div className="container">
             <h3 className="title">Description</h3>
             <p className="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. 
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            {room.description}
             </p>
             <div className="sub-infos">
-                <span className="price"><b>Prix/nuit :</b> <strong>79€</strong></span>
+                <span className="price"><b>Prix/nuit :</b> <strong>{`${room.price} €`}</strong></span>
                 <Rate allowClear={true} defaultValue={4} />
             </div>
 

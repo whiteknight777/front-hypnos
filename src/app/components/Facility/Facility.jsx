@@ -36,13 +36,13 @@ function CardFacility({loading, facility}) {
         loading={loading} 
         hoverable>
           <Meta
-            title={`Etablissement ${facility}`}
+            title={facility.name}
             description={
               <CardContent 
-                id={facility}
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo"
-                address="Lorem ipsum dolor sit amet, consectetur adipiscing"
-                city="Lorem ipsum"
+                id={facility.id}
+                description={facility.description}
+                address={facility.address}
+                city={facility.city}
               />
           }
           />

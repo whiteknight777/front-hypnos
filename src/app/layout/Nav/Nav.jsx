@@ -21,7 +21,7 @@ function Nav() {
 
   const dynamicNav = () => {
     switch (userInfos?.role) {
-      case "ROLE_ADMIN":
+      case "ADMIN":
         return adminUrls
       default:
         return [];

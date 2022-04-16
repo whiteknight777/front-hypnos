@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import { Navigate } from "react-router-dom";
 import { UserContext, ActionTypes } from '../../../contexts/userProvider';
-import { getUserByToken } from '../../../utils/requests/auth';
+import { GetUserByToken } from '../../../utils/requests/auth';
 import Loader from '../../layout/Loader/Loader';
 
 /*
@@ -21,7 +21,7 @@ function SecurtityGuard(props) {
     useEffect(() => {
         const requestUser = async () => {
             try {
-                getUserByToken(accessToken).then(res => {
+                GetUserByToken(accessToken).then(res => {
                     const { data } = res.data;
                     dispatch({
                         type: ActionTypes.userLoaded,

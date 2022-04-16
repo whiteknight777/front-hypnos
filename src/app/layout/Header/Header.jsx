@@ -9,7 +9,6 @@ function HeaderMenu() {
     const { userStore, dispatch } = React.useContext(UserContext);
     const { isAuthorized, userInfos } = userStore;
     const nav = useNavigate()
-    console.log(userInfos, isAuthorized)
 
     const dynamicContent = () => {
         switch (isAuthorized) {

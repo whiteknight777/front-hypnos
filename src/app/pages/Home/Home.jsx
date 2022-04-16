@@ -4,22 +4,35 @@ import {
     Button,
   } from 'antd';
 import CardFacility from '../../components/Facility/Facility';
+import { GetAll } from '../../../utils/requests/facilities';
 import './Home.scss'
 
-function Home() {
-
-    const facilities = [1,2,3,4,5,6,7]
+const Home = () => {
     const [loading, setLoading] = React.useState(true);
+    const [facilities, setFacilities] = React.useState([]);
+    
+    const getFacilities = async () => {
+        try {
+            const response = await GetAll()
+            const {data} = response.data;
+            setFacilities(data)
+        } catch (error) {
+            console.error(error.response?.data?.error || error.message)
+        }finally{
+            setTimeout(() => {
+                setLoading(false)
+            }, 500);
+        }
+    }
 
     React.useState(() => {
-        setTimeout(() =>{
-            setLoading(false)
-        }, 1000)
+        getFacilities()
+    // eslint-disable-next-line
     }, [])
     return (
         <>
             <section className="home-content">
-                <h1 className="main-title">Nos Etablissements</h1>
+                <h1 className="main-title">Nos Etablissements ({facilities?.length})</h1>
                 <p className="description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
                     incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
@@ -34,8 +47,11 @@ function Home() {
                 </Input.Group>
                 </div>
                 <div className="facilities-list">
-                {facilities.map((facility, k) => (
-                    <CardFacility key={`etablissement-${k}`} loading={loading} facility={facility} />
+                {facilities?.map((facility, k) => (
+                    <CardFacility 
+                    key={`etablissement-${facility.id}`} 
+                    loading={loading} 
+                    facility={facility} />
                 ))}
                 </div>
             </section>
