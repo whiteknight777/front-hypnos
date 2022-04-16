@@ -1,7 +1,8 @@
 import React from 'react';
 import { Drawer, Rate, Divider, Form, Input, Button, Alert, DatePicker, Space} from 'antd';
 // import moment from 'moment';
-import './Room.scss'
+import './Room.scss';
+import {TiInputChecked} from 'react-icons/ti';
 import Slider from '../Slider/Slider';
 
 function RoomDetails({room, onClose, visible}) {
@@ -52,12 +53,15 @@ function RoomDetails({room, onClose, visible}) {
 
             <h3 className="title">Services</h3>
             <ul className="services-list">
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
-                <li className="item-service">officia deserunt mollit anim id est laborum.</li>
+                {room.services.length > 0 ? (
+                    room.services.map(el => (
+                        <li key={`service-${el.createdAt}`} className="item-service">
+                            <TiInputChecked className="icon" /> {el.service.title}
+                        </li>
+                    ))
+                ): (
+                    <span>Aucun service disponible...</span>
+                )}
             </ul>
 
             <Divider dashed/>

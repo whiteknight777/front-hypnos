@@ -41,7 +41,6 @@ function CardRoom({loading, room}) {
     let src = "https://via.placeholder.com/300x225"
     if(medias.length > 0){
       let mainPic = medias.find(e => e.isMain)
-      console.log(mainPic)
       if(mainPic === undefined) {
         mainPic = medias[0]
         src = mainPic.url

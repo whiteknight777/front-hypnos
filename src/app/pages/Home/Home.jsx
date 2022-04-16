@@ -28,7 +28,7 @@ const Home = () => {
     React.useState(() => {
         getFacilities()
     // eslint-disable-next-line
-    }, [])
+    }, [facilities])
     return (
         <>
             <section className="home-content">

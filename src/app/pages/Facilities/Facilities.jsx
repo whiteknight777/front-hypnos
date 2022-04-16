@@ -90,7 +90,7 @@ function Facilities() {
                               <Button size="large">Valider</Button>
                           </Input.Group>
                         </div>
-                        {facility.rooms.map((room, k) => (
+                        {facility.rooms.sort((a, b) => a.title.localeCompare(b.title)).map((room, k) => (
                         <CardRoom key={`suite-${k}`} loading={loading} room={room} />
                         ))}
                         </>
