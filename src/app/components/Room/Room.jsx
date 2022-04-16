@@ -36,6 +36,17 @@ const CardContent = ({id, description, room}) => {
 }
 
 function CardRoom({loading, room}) {
+    // get the main pic if exist
+    const {medias} = room;
+    let src = "https://via.placeholder.com/300x225"
+    if(medias.length > 0){
+      let mainPic = medias.find(e => e.isMain)
+      console.log(mainPic)
+      if(mainPic === undefined) {
+        mainPic = medias[0]
+        src = mainPic.url
+      }
+    }
     return (
         <Card className="room-box" 
         style={{ marginTop: 16 }} 
@@ -46,7 +57,7 @@ function CardRoom({loading, room}) {
             <Image
               alt={`room-${room.id}`}
               className="responsive-img" 
-              src="https://via.placeholder.com/350x300"
+              src={src}
             />)
         }
         >
@@ -55,9 +66,6 @@ function CardRoom({loading, room}) {
             description={
               <CardContent 
                 room={room}
-                // id={room.id}
-                // description={room.description}
-                // price={`${room.price} €`}
               />
             }
           />

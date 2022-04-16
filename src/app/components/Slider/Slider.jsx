@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd';
+import './Slider.scss'
 
 function Slider({data, options}) {
     return ( 

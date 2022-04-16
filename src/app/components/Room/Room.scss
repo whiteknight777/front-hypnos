@@ -3,7 +3,10 @@
     .ant-card-cover{
         flex-grow: 1;
         .responsive-img{
-            max-height: 235px;
+            max-height: 225px;
+            max-width: 300px;
+            height: 225px;
+            width: 300px;
         }
         .ant-skeleton-element {
             width: 100%;

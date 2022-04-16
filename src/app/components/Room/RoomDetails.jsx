@@ -5,15 +5,24 @@ import './Room.scss'
 import Slider from '../Slider/Slider';
 
 function RoomDetails({room, onClose, visible}) {
-    const roomPictures = [
-      {src: "https://via.placeholder.com/800x400", alt: "pic1"},
-      {src: "https://via.placeholder.com/800x400", alt: "pic2"},
-      {src: "https://via.placeholder.com/800x400", alt: "pic3"},
-      {src: "https://via.placeholder.com/800x400", alt: "pic4"},
-    ]
+    let roomPictures = []
+    // prepare room pictures
+    const {medias} = room;
+    if(medias.length > 0){
+        medias.forEach(media => {
+            roomPictures.push({
+                src: media.url,
+                alt: media.name
+            })
+        })
+    }else{
+        roomPictures = [
+            {src: "https://via.placeholder.com/800x480", alt: "pic1"},
+            {src: "https://via.placeholder.com/800x480", alt: "pic2"},
+        ]
+    }
     const options = {autoplay: true, position: 'bottom'}
     const [form] = Form.useForm();
-
 
     return ( 
         <Drawer
