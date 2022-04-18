@@ -51,19 +51,6 @@ function HeaderMenu() {
                         >
                             <RiLoginBoxLine className="nav-icon"/> Déconnexion
                         </Button>
-                        <Modal
-                            title="Déconnexion"
-                            visible={visible}
-                            onOk={()=> {
-                                handleOk()
-                            }}
-                            okText="Se déconnecter"
-                            cancelText="Annuler"
-                            confirmLoading={loading}
-                            onCancel={handleCancel}
-                        >
-                            <p>{modalText}</p>
-                        </Modal>
                     </>
                 )
         
@@ -94,19 +81,6 @@ function HeaderMenu() {
                     <>
                         <li onClick={showModal}
                         >Déconnexion</li>
-                        <Modal
-                            title="Déconnexion"
-                            visible={visible}
-                            onOk={()=> {
-                                handleOk()
-                            }}
-                            okText="Se déconnecter"
-                            cancelText="Annuler"
-                            confirmLoading={loading}
-                            onCancel={handleCancel}
-                        >
-                            <p>{modalText}</p>
-                        </Modal>
                     </>
                 )
         
@@ -186,7 +160,7 @@ function HeaderMenu() {
                         }}
                     >Accueil</li>
                     {dynamicNav().map((item, k) => (
-                        <li key={`nav-${k+1}`} icon={item.icon} onClick={() => {
+                        <li key={`mobile-nav-${k+1}`} icon={item.icon} onClick={() => {
                             nav(item.url, { replace: true })
                             setOpen(false)
                         }}>
@@ -199,6 +173,19 @@ function HeaderMenu() {
 
                 </Drawer>
             </div>
+            <Modal
+                title="Déconnexion"
+                visible={visible}
+                onOk={()=> {
+                    handleOk()
+                }}
+                okText="Se déconnecter"
+                cancelText="Annuler"
+                confirmLoading={loading}
+                onCancel={handleCancel}
+            >
+                <p>{modalText}</p>
+            </Modal>
         </div>
     );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert, Form, Input, Spin } from 'antd';
-// import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik';
 import { LoginRequest } from '../../../utils/requests/auth';
@@ -16,9 +15,6 @@ function Login() {
         password: ''
     }
     const { dispatch } = React.useContext(UserContext);
-
-    // Mutations
-    // const mutation = useMutation(LoginRequest)
 
     const formik = useFormik({
         initialValues,
