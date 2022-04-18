@@ -1,5 +1,5 @@
 /**
- * AUTH REQUESTS
+ * USERS REQUESTS
  */
 
  import {USERS_URL} from '../apiUrl'

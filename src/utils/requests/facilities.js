@@ -1,5 +1,5 @@
 /**
- * AUTH REQUESTS
+ * FACILITIES REQUESTS
  */
 
  import {FACILITIES_URL} from '../apiUrl'
