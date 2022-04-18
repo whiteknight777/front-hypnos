@@ -6,7 +6,7 @@ function SignIn() {
     const [form] = Form.useForm();
     return (
     <div className="sign-in-content">
-        <h2 className="title">Créer un compte <br/> Gratuitement</h2>
+        <h2 className="title">Créez un compte <br/> Gratuitement</h2>
         <div className="form-container">
             <Alert
                 className="alert-box"

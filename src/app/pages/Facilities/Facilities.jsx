@@ -91,7 +91,7 @@ function Facilities() {
                           </Input.Group>
                         </div>
                         {facility.rooms.sort((a, b) => a.title.localeCompare(b.title)).map((room, k) => (
-                        <CardRoom key={`suite-${k}`} loading={loading} room={room} />
+                          <CardRoom key={`suite-${k}`} loading={loading} room={room} facility={facility}/>
                         ))}
                         </>
                     )}

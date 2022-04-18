@@ -6,8 +6,9 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        font-size: .9rem;
         .back-icon{
-            font-size: 15px;
+            font-size: .8rem;
         }
     }
     .page-header{
@@ -34,9 +35,9 @@
             padding-left: 6px;
         }
         .description{
-            font-size: 1rem;
             line-height: 1.6;
-            padding-left: 6px;
+            padding-left: 6px;    
+            font-size: .9rem;
         }
         .sub-infos{
             padding-left: 6px;
@@ -69,6 +70,7 @@
     Button.ant-btn.ant-btn-default{
         border-radius: 20px;
         min-width: 130px;
+        font-size: .8rem;
     }
 }
 
@@ -83,6 +85,103 @@
             .contact-form{
                 .alert-box{
                     margin: 1rem 0
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .etab-content{
+        .go-back{
+            cursor: pointer;
+            padding-left: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .8rem;
+            .back-icon{
+                font-size: .8rem;
+            }
+        }
+        .page-header{
+            background-color: white;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            .ant-page-header-heading{
+                flex-flow: row wrap;
+                align-items: center;
+                .ant-page-header-heading-left{
+                    .ant-page-header-heading-title{
+                        min-width: 400px;
+                        .main-title{
+                            font-size: 20px;
+                            margin: 0;
+                            padding-left: 6px;
+                        }
+                    }
+                }
+            }
+        }
+        .container{
+            padding: 0 1rem;
+            .title{
+                padding-left: 6px;
+            }
+            .description{
+                line-height: 1.6;
+                padding-left: 6px;    
+                font-size: .9rem;
+            }
+            .sub-infos{
+                padding-left: 6px;
+                display: flex;
+                flex-flow: column;
+            }
+            .search-content{
+                display: flex;
+                flex-flow: row;
+                padding-bottom: 1rem;
+                .group-input{
+                    width: 100%;
+                    display: flex;
+                    flex-flow: row;
+                    gap: 10px;
+                    &::before{
+                        display: none;
+                    }
+                    &::after{
+                        display: none;
+                    }
+                    .ant-input{
+                        max-width: calc(100% - 100px);
+                        border-radius: 20px;
+                        padding-left: 1rem;
+                    }
+                }
+            }
+        }
+        
+        Button.ant-btn.ant-btn-default{
+            border-radius: 20px;
+            min-width: 130px;
+            font-size: .8rem;
+        }
+    }
+    
+    .ant-drawer-content{
+        .ant-drawer-body{
+            .contact-content{
+                .description{
+                    font-size: 1rem;
+                    line-height: 1.6;
+                    padding-left: 6px;
+                }
+                .contact-form{
+                    .alert-box{
+                        margin: 1rem 0
+                    }
                 }
             }
         }

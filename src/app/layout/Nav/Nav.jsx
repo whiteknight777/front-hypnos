@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from "react-router-dom";
-import {RiLayout2Line} from 'react-icons/ri'
+import {adminUrls} from '../PrivateRoutes'
 import {ImHome} from 'react-icons/im'
 import { UserContext } from '../../../contexts/userProvider';
 
@@ -11,13 +11,6 @@ function Nav() {
   
   const { userStore } = React.useContext(UserContext);
   const { userInfos } = userStore;
-  const adminUrls = [
-    {
-      name: "Tableau de bord", 
-      url:"/admin/tableau-de-bord", 
-      icon: <RiLayout2Line className="nav-icon" />
-    }
-  ]
 
   const dynamicNav = () => {
     switch (userInfos?.role) {

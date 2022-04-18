@@ -1,11 +1,38 @@
 import React from 'react';
-import { Drawer, Rate, Divider, Form, Input, Button, Alert, DatePicker, Space} from 'antd';
-// import moment from 'moment';
-import './Room.scss';
+import { Drawer, Rate, Divider, Form, Input, Button, Alert, DatePicker, Space, Modal} from 'antd';
+import { useNavigate } from "react-router-dom";
 import {TiInputChecked} from 'react-icons/ti';
+import { UserContext } from '../../../contexts/userProvider';
+import './Room.scss';
 import Slider from '../Slider/Slider';
 
-function RoomDetails({room, onClose, visible}) {
+function RoomDetails({room, onClose, visible, facility}) {
+    const { userStore } = React.useContext(UserContext);
+    const { isAuthorized } = userStore;
+    const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [modalText, setModalText] = React.useState('Vous devez vous connecter pour pouvoir faire une réservation');
+
+    const nav = useNavigate()
+    const showModal = () => {
+        setOpen(true);
+    };
+
+    const handleOk = () => {
+        setModalText('Vous allez être redirigé dans quelques instant...');
+        setLoading(true);
+        setTimeout(() => {
+          nav('/connexion', { replace: true })
+          setOpen(false);
+          setLoading(false);
+          setModalText('Vous devez vous connecter pour pouvoir faire une réservation ?');
+        }, 1500);
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
+
     let roomPictures = []
     // prepare room pictures
     const {medias} = room;
@@ -24,6 +51,15 @@ function RoomDetails({room, onClose, visible}) {
     }
     const options = {autoplay: true, position: 'bottom'}
     const [form] = Form.useForm();
+
+    const checkSubmition = () => {
+        if(isAuthorized){
+            // TODO 
+            console.log('submit form')
+        }else{
+            showModal()
+        }
+    }
 
     return ( 
         <Drawer
@@ -82,10 +118,10 @@ function RoomDetails({room, onClose, visible}) {
                 initialValues={{ layout: 'vertical' }}
                 >
                     <Form.Item label="Etablissement">
-                        <Input placeholder="input placeholder" />
+                        <Input placeholder="input placeholder" defaultValue={facility.name} disabled />
                     </Form.Item>
                     <Form.Item label="Suite">
-                        <Input placeholder="input placeholder" />
+                        <Input placeholder="input placeholder" defaultValue={room.title} disabled/>
                     </Form.Item>
                     <Form.Item label="Date de début">
                         <Space direction="vertical">
@@ -98,9 +134,22 @@ function RoomDetails({room, onClose, visible}) {
                         </Space>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" size="large" shape="round" block>Réserver</Button>
+                        <Button onClick={checkSubmition} type="primary" size="large" shape="round" block>Réserver</Button>
                     </Form.Item>
                 </Form>
+                <Modal
+                    title="Réservations"
+                    visible={open}
+                    onOk={()=> {
+                        handleOk()
+                    }}
+                    okText="Se connecter"
+                    cancelText="Annuler"
+                    confirmLoading={loading}
+                    onCancel={handleCancel}
+                >
+                    <p>{modalText}</p>
+                </Modal>
             </div>
         </div>
       </section> 

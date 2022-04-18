@@ -5,7 +5,7 @@ import RoomDetails from './RoomDetails';
 
 const { Meta } = Card;
 
-const CardContent = ({id, description, room}) => {
+const CardContent = ({room, facility}) => {
   const [open, setOpen] = React.useState(false);
   return (
     <>
@@ -28,6 +28,7 @@ const CardContent = ({id, description, room}) => {
     </section>
     <RoomDetails
     room={room}
+    facility={facility}
     onClose={() => setOpen(false)}
     visible={open}
     /> 
@@ -35,7 +36,7 @@ const CardContent = ({id, description, room}) => {
   )
 }
 
-function CardRoom({loading, room}) {
+function CardRoom({loading, room, facility}) {
     // get the main pic if exist
     const {medias} = room;
     let src = "https://via.placeholder.com/300x225"
@@ -65,6 +66,7 @@ function CardRoom({loading, room}) {
             description={
               <CardContent 
                 room={room}
+                facility={facility}
               />
             }
           />

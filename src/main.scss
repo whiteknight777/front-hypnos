@@ -14,11 +14,38 @@ code {
 
 #root{
   min-height: 100vh;
-  font-family: 'Roboto', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'Poppin','Roboto', 'Segoe UI', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-    font-size: 16px;
+    font-size: 14px;
+}
+
+h1,h2,h3,h4{
+  font-family: 'Roboto', 'Segoe UI', 'Segoe UI', source-code-pro, Menlo, Monaco, Consolas, 
+    monospace;
 }
 
 input.ant-input{
   padding: 0.5rem;
+}
+
+@font-face {
+  font-family: "Poppin-light";
+  src: url('./assets/fonts/Poppins-Light.ttf');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppin-medium";
+  src: url('./assets/fonts/Poppins-Medium.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppin";
+  src: url('./assets/fonts/Poppins-Regular.ttf');
+  font-weight: normal;
+  font-size: 14px;
+  font-style: normal;
 }

@@ -4,7 +4,7 @@ const baseURL = process.env.REACT_APP_API_URL;
 const Axios = axios.create({
     baseURL,
     responseType: 'json',
-    timeout: 3000,
+    timeout: 8000, // return timeout error ater 8 seconds
     withCredentials: true,
     mode: 'cors',
     headers: {
