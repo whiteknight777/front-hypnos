@@ -1,18 +1,55 @@
 import React from 'react';
-import { Drawer, Rate, Divider, Form, Input, Button, Alert, DatePicker, Space, Modal} from 'antd';
+import { Drawer, Rate, Divider, Form, Input, Spin, Alert, DatePicker, Space, Modal} from 'antd';
 import { useNavigate } from "react-router-dom";
 import {TiInputChecked} from 'react-icons/ti';
+import { useFormik } from 'formik';
 import { UserContext } from '../../../contexts/userProvider';
-import './Room.scss';
+import { NewBooking } from '../../../utils/requests/bookings';
+import BookingSchema from '../../validatorSchema/bookingSchema';
 import Slider from '../Slider/Slider';
+import './Room.scss';
 
 function RoomDetails({room, onClose, visible, facility}) {
     const { userStore } = React.useContext(UserContext);
-    const { isAuthorized } = userStore;
+    const { isAuthorized, userInfos } = userStore;
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [modalText, setModalText] = React.useState('Vous devez vous connecter pour pouvoir faire une réservation');
 
+    
+    const [isSuccess, setSuccess] = React.useState(undefined);
+    const initialValues = {
+      startDate: "",
+      endDate: "",
+    }
+
+    const formik = useFormik({
+        initialValues,
+        validationSchema: BookingSchema,
+        onSubmit: async (values, { setStatus, setSubmitting, resetForm }) => {
+            values.userId = userInfos.id
+            values.roomId = room.id
+            values.isDeleted = false
+            setSubmitting(true)
+            try {
+                const response = await NewBooking(values)
+                const {data} = response;
+                console.log(data)
+                setSuccess(true)
+                setStatus("Votre réservation à bien été enregistrée !")
+                setTimeout(() => {
+                  resetForm()
+                }, 4000)
+            } catch (error) {
+                console.error(error.message)
+                setSuccess(false)
+                setStatus(error.response?.data?.message || error.message)
+            }finally{
+                setSubmitting(false)
+            }
+        }
+    });
+    
     const nav = useNavigate()
     const showModal = () => {
         setOpen(true);
@@ -55,7 +92,7 @@ function RoomDetails({room, onClose, visible, facility}) {
     const checkSubmition = () => {
         if(isAuthorized){
             // TODO 
-            console.log('submit form')
+            formik.handleSubmit()
         }else{
             showModal()
         }
@@ -103,13 +140,15 @@ function RoomDetails({room, onClose, visible, facility}) {
             <Divider dashed/>
             
             <h3 className="title">Faire une réservation</h3>
-            <Alert
-                className="alert-box"
-                message="Success Tips"
-                description="Detailed description and advice about successful copywriting."
-                type="success"
-                showIcon
-            />
+            {formik.status && (
+                <Alert
+                    className="alert-box"
+                    message={isSuccess === true ? "Succès" : "Erreur"}
+                    description={formik.status}
+                    type={isSuccess === true ? "success" : "error"}
+                    showIcon
+                />
+              )}
             <div className="form-container">
                 <Form
                 className="form-horizontal"
@@ -124,17 +163,34 @@ function RoomDetails({room, onClose, visible, facility}) {
                         <Input placeholder="input placeholder" defaultValue={room.title} disabled/>
                     </Form.Item>
                     <Form.Item label="Date de début">
-                        <Space direction="vertical">
-                            <DatePicker />
-                        </Space>
+                        <Input placeholder="DD/MM/YYYY" name="startDate"
+                            {...formik.getFieldProps('startDate')}/>
+                            {formik.touched.startDate && formik.errors.startDate ? (
+                                <div className="form-error">
+                                    <div className="help-block">{formik.errors.startDate}</div>
+                                </div>
+                            ) : null}
                     </Form.Item>
                     <Form.Item label="Date de fin">
-                        <Space direction="vertical">
-                            <DatePicker  />
-                        </Space>
+                        <Input placeholder="DD/MM/YYYY" name="endDate"
+                            {...formik.getFieldProps('endDate')}/>
+                            {formik.touched.endDate && formik.errors.endDate ? (
+                                <div className="form-error">
+                                    <div className="help-block">{formik.errors.endDate}</div>
+                                </div>
+                            ) : null}
                     </Form.Item>
                     <Form.Item>
-                        <Button onClick={checkSubmition} type="primary" size="large" shape="round" block>Réserver</Button>
+                        {/* <Button onClick={checkSubmition} type="primary" size="large" shape="round" block>Réserver</Button> */}
+                        <button 
+                        type="submit" 
+                        className="submit-btn"
+                        onClick={checkSubmition}
+                        disabled={formik.isSubmitting}
+                        >
+                            Réserver
+                            {formik.isSubmitting && <Spin className="loader" />}
+                        </button>
                     </Form.Item>
                 </Form>
                 <Modal

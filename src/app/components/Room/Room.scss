@@ -123,6 +123,35 @@
                         width: 100%;
                     }
                 }
+                .ant-form-item-control{
+                    .form-error{
+                        padding: .5rem 0;
+                        color: rgb(219, 22, 22);
+                    }
+                }
+                .submit-btn {
+                    transition: .5s;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    width: 100%;
+                    border-radius: 20px;
+                    padding: 8px 0;
+                    cursor: pointer;
+                    border: #1890ff solid 2px;
+                    background-color: white;
+                    color: #1890ff;
+                    .loader{
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    &:hover{
+                        background-color: #1890ff;
+                        color: white;
+                    }
+                }
             }
         }
     }

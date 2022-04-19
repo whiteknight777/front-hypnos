@@ -87,7 +87,7 @@ function Facilities() {
               console.log(args)
               setTimeout(() => {
                 resetForm()
-              }, 2000)
+              }, 4000)
           } catch (error) {
               console.error(error.message)
               setSuccess(false)
@@ -159,7 +159,10 @@ function Facilities() {
         title={`Contacter ${facility.name}`}
         placement={"right"}
         width={700}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+            setOpen(false)
+            formik.resetForm()
+        }}
         visible={open}
       >
         <section className="contact-content">
@@ -213,12 +216,12 @@ function Facilities() {
                         </div>
                     ) : null}
                 </Form.Item>
-                <Form.Item label="Sujet">
-                    <select className="form-control" 
-                      placeholder="Selectionnez un motif"
+                <Form.Item label="Motif">
+                    <select className="ant-input" 
                       name="feedBackTypeId"
                       {...formik.getFieldProps('feedBackTypeId')} 
                       >
+                      <option value={""}>Selectionnez un motif</option>
                       {feedBackTypes && feedBackTypes.map(item => (
                         <option key={`option-${item.id}`} value={item.id}>{item.title}</option>
                       ))}
