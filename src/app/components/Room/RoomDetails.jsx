@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, Rate, Divider, Form, Input, Spin, Alert, DatePicker, Space, Modal} from 'antd';
+import { Drawer, Rate, Divider, Form, Input, Spin, Alert, Modal} from 'antd';
 import { useNavigate } from "react-router-dom";
 import {TiInputChecked} from 'react-icons/ti';
 import { useFormik } from 'formik';
@@ -181,7 +181,6 @@ function RoomDetails({room, onClose, visible, facility}) {
                             ) : null}
                     </Form.Item>
                     <Form.Item>
-                        {/* <Button onClick={checkSubmition} type="primary" size="large" shape="round" block>Réserver</Button> */}
                         <button 
                         type="submit" 
                         className="submit-btn"

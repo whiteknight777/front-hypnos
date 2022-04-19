@@ -21,8 +21,8 @@ export const gerantUrls = [
 
 export const clientUrls = [
     {
-      name: "Tableau de bord", 
-      url:"/client/tableau-de-bord", 
+      name: "Mon compte", 
+      url:"/client/mon-compte", 
       icon: <RiLayout2Line className="nav-icon" />
     }
 ]

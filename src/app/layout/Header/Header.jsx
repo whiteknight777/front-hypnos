@@ -3,7 +3,7 @@ import { Button, Avatar, Modal, Drawer, Divider } from 'antd';
 import { useNavigate } from "react-router-dom";
 import {RiLoginBoxLine} from 'react-icons/ri'
 import {BiUserCircle} from 'react-icons/bi'
-import {adminUrls} from '../PrivateRoutes'
+import {adminUrls, clientUrls, gerantUrls} from '../PrivateRoutes'
 import {BsList} from 'react-icons/bs'
 import { UserContext, ActionTypes } from '../../../contexts/userProvider';
 import { formatRoles } from '../../../utils/utils';
@@ -106,6 +106,10 @@ function HeaderMenu() {
         switch (userInfos?.role) {
           case "ADMIN":
             return adminUrls
+          case "GERANT":
+            return gerantUrls
+          case "CLIENT":
+            return clientUrls
           default:
             return [];
         }

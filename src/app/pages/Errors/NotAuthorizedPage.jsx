@@ -9,7 +9,7 @@ function NotAuthorizedPage() {
     status="403"
     title="403"
     subTitle="Désolé, mais vous n'êtes pas autorisé(e) à accéder à cette page..."
-    extra={<Button shape="round" onClick={() => nav('/')}>Retour</Button>}
+    extra={<Button shape="round" onClick={() => nav('/', { replace: true })}>Retour</Button>}
   />
   );
 }

@@ -1,0 +1,72 @@
+.account-content{
+    .page-header{
+        background-color: white;
+        border-radius: 25px;
+        margin-bottom: 30px;
+        .ant-page-header-heading{
+            align-items: center;
+            .ant-page-header-heading-left{
+                .ant-page-header-heading-title{
+                    min-width: 500px;
+                    .main-title{
+                        font-size: 20px;
+                        margin: 0;
+                        padding-left: 6px;
+                    }
+                }
+            }
+        }
+    }
+    .container{
+        padding: 0 1rem;
+        .title{
+            padding-left: 6px;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            button{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .description{
+            line-height: 1.6;
+            padding-left: 6px;    
+            font-size: .9rem;
+        }
+        .sub-infos{
+            padding-left: 6px;
+            display: flex;
+            flex-flow: column;
+        }
+        .search-content{
+            display: flex;
+            flex-flow: row;
+            .group-input{
+                width: 100%;
+                display: flex;
+                flex-flow: row;
+                gap: 10px;
+                &::before{
+                    display: none;
+                }
+                &::after{
+                    display: none;
+                }
+                .ant-input{
+                    max-width: calc(100% - 100px);
+                    border-radius: 20px;
+                    padding-left: 1rem;
+                }
+            }
+        }
+    }
+    
+    Button.ant-btn.ant-btn-default{
+        border-radius: 20px;
+        min-width: 130px;
+        font-size: .8rem;
+    }
+}

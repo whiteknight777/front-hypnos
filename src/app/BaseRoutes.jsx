@@ -8,6 +8,7 @@ import SecurtityGuard from './pages/Auth/SecurtityGuard';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const DashboardAdmin = lazy(() => import('./pages/Admin/Dashboard/Dashboard'));
+const DashboardClient = lazy(() => import('./pages/Client/Dashboard'));
 const Facilities = lazy(() => import('./pages/Facilities/Facilities'));
 const Login = lazy(() => import('./pages/Auth/Login'));
 const SignIn = lazy(() => import('./pages/Auth/SignIn'));
@@ -26,8 +27,11 @@ export function BaseRoutes() {
                 <Route path="/admin" element={<SecurtityGuard component={<DashboardAdmin />}/>}>
                     <Route path="tableau-de-bord" element={<SecurtityGuard component={<DashboardAdmin />}/>}/>
                 </Route>
-                <Route path="/403" element={<NotAuthorizedPage />} />
-                <Route path="*" element={<ErrorPage />} />
+                <Route path="/client" element={<SecurtityGuard component={<DashboardClient />}/>}>
+                    <Route path="mon-compte" element={<SecurtityGuard component={<DashboardClient />}/>}/>
+                </Route>
+                <Route path="/403" element={<SecurtityGuard component={<NotAuthorizedPage />}/>} /> 
+                <Route path="*" element={<SecurtityGuard component={<ErrorPage />}/>} /> 
             </Routes>
         </MainLayout>
     );

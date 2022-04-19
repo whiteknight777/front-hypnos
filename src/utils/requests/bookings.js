@@ -17,3 +17,11 @@
  export function GetOne(params) {
   return Axios.get(`${BOOKINGS_URL}/${params}`);
  }
+
+ export function GetAllClient(params) {
+  return Axios.get(`${BOOKINGS_URL}/${params}`);
+ }
+ 
+ export function PatchBooking(params, formData) {
+  return Axios.patch(`${BOOKINGS_URL}/${params}`, formData);
+ }

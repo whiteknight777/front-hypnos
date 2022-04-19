@@ -43,7 +43,7 @@ function SecurtityGuard(props) {
         // eslint-disable-next-line
     }, [isAuthorized, accessToken, dispatch]);  
 
-    return showLoaderScreen ? <Loader /> : <Guard>{props.component}</Guard>;
+    return showLoaderScreen ? <Loader /> : <Guard userStore={userStore}>{props.component}</Guard>;
 }
 
 
@@ -52,20 +52,31 @@ function SecurtityGuard(props) {
 * Check if path contain key words (admin, gerant, user)
 * redirect to content or redirect to 403 error page
 */
-const Guard = ({children}) => {
+const Guard = ({children, userStore}) => {
     const {pathname} = document.location
-    const { userStore } = useContext(UserContext);
-    const { isAuthorized } = userStore;
+    const { isAuthorized, userInfos } = userStore;
+    const accessToken = sessionStorage.getItem('accessToken');
+    // console.log(userInfos)
     const checkPath = () => {
         if(pathname.search('/admin') === -1 
         && pathname.search('/gerant') === -1
         && pathname.search('/client') === -1
         ){
             return children
-        }else{
-            if(isAuthorized) return children
-            return <Navigate to="/403" replace={true} />
         }
+        if(isAuthorized || accessToken) {
+            if((pathname.search('/admin') !== -1 && userInfos?.role === "ADMIN") || accessToken){
+                return children
+            }
+            if((pathname.search('/gerant') !== -1 && userInfos?.role === "GERANT")|| accessToken){
+                return children
+            }
+            if((pathname.search('/client') !== -1 && userInfos?.role === "CLIENT")|| accessToken){
+                console.log('fired in')
+                return children
+            }
+        }
+        return <Navigate to="/403" replace={true} />
     }
     return checkPath()
 }
