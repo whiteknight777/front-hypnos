@@ -103,8 +103,7 @@ function DashboardClient() {
     const disableBooking = async (checked, booking) => {
         setLoading(true)
         try {
-            const response = await PatchBooking(booking.id, {isDeleted: !checked})
-            const {data} = response.data;
+            await PatchBooking(booking.id, {isDeleted: !checked})
             setMessage({
                 type: "success",
                 show: true,
@@ -204,15 +203,19 @@ function DashboardClient() {
                             <span className="date-creation"><b>Date de création :</b> {new Date(userInfos.createdAt).toLocaleString()}</span>
                         </p>
                         <Divider dashed />
-                        
-                        <h3 className="title">
-                            <span>Mes réservations ({bookings?.length})</span>
+                    
+                        <div className="title">
+                            <h3>Mes réservations ({bookings?.length})</h3>
+                            <div className="actions-group">
                             <Tooltip title="Rafraichir">
-                                <Button type="primary" shape="circle" icon={<BiRefresh />} onClick={() => {
+                                <Button type="default" size="large" shape="shape" icon={<BiRefresh />} onClick={() => {
                                 getClientBookings()
-                                }}/>
+                                }}>
+                                Rafraichir
+                            </Button>   
                             </Tooltip>
-                        </h3>
+                            </div>
+                        </div>
                         {message.show && (
                             <>
                             <Alert

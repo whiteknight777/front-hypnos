@@ -28,30 +28,34 @@ function Nav() {
     }
   }
 
+  // console.log(currentKey)
+  // console.log(loading)
+
   const getActiveKey = () => {
+    setLoading(true)
     const urls = dynamicNav();
     let current = 0;
     if(urls.length === 0) {
-      return ['0']
-    }
-
-    urls.forEach((item, key) => {
-      if(location.pathname === item.url){
-        current = key+1
-      }else if(location.pathname === "/"){
-        current = ['0']
-      }
-    });
-    if([current.toString()] !== currentKey){
+      console.log(userStore)
       setKey([current.toString()])
       setLoading(false)
+    }else{
+      urls.forEach((item, key) => {
+        if(location.pathname === item.url){
+          current = key+1
+        }
+      });
+      if([current.toString()] !== currentKey){
+        setKey([current.toString()])
+        setLoading(false)
+      }
     }
   }
 
   React.useEffect(() => {
     getActiveKey()
     // eslint-disable-next-line
-  }, [userInfos])
+  }, [userStore])
 
   return ( 
       <Sider trigger={null} className="sider-nav">

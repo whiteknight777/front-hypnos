@@ -1,3 +1,5 @@
+import { MdSupervisedUserCircle } from 'react-icons/md';
+import { BsChatTextFill } from 'react-icons/bs';
 import {RiLayout2Line} from 'react-icons/ri';
 
 /*
@@ -8,6 +10,16 @@ export const adminUrls = [
       name: "Tableau de bord", 
       url:"/admin/tableau-de-bord", 
       icon: <RiLayout2Line className="nav-icon" />
+    },
+    {
+      name: "Utilisateurs", 
+      url:"/admin/utilisateurs", 
+      icon: <MdSupervisedUserCircle className="nav-icon" />
+    },
+    {
+      name: "Messages", 
+      url:"/admin/messages", 
+      icon: <BsChatTextFill className="nav-icon" />
     }
 ]
 

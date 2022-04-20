@@ -4,7 +4,7 @@ import {
     Button,
   } from 'antd';
 import CardFacility from '../../components/Facility/Facility';
-import { GetAll } from '../../../utils/requests/facilities';
+import { GetActiveFacilities } from '../../../utils/requests/facilities';
 import './Home.scss'
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
     
     const getFacilities = async () => {
         try {
-            const response = await GetAll()
+            const response = await GetActiveFacilities()
             const {data} = response.data;
             setFacilities(data)
         } catch (error) {

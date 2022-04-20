@@ -30,6 +30,7 @@ function HeaderMenu() {
           setVisible(false);
           setLoading(false);
           setModalText('Voulez-vous vraiment vous déconnecter ?');
+          nav('/', { replace: true })
         }, 1500);
     };
 

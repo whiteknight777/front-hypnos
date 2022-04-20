@@ -11,29 +11,26 @@ import {
     Table
   } from 'antd';
   import { UserContext } from '../../../../contexts/userProvider';
-  import { GetAllFacilities } from '../../../../utils/requests/facilities';
-  import { GetGerants } from '../../../../utils/requests/users';
+  import { GetAllUser } from '../../../../utils/requests/users';
   import GetColumnSearchProps from '../../../components/ColumnSearch/ColumnSearch';
   import {BiPlusCircle, BiRefresh} from 'react-icons/bi';
-import EditFacility from './EditFacility';
 import '../main.scss';
-import CreateFacility from './CreateFacility';
-import { RiLayout2Line } from 'react-icons/ri';
+import CreateUser from './CreateUser';
+import EditUser from './EditUser';
+import { MdSupervisedUserCircle } from 'react-icons/md';
 
-function DashboardAdmin() {
+function UsersAdmin() {
     
     const { userStore } = React.useContext(UserContext);
     const { userInfos } = userStore;
-    const [facilities, setFacilities] = React.useState([]);
     const [users, setUsers] = React.useState([]);
     const [openEdit, setOpenEdit] = React.useState(false);
     const [openCreate, setOpenCreate] = React.useState(false);
-    const [selectedFacility, setFacility] = React.useState({
-        name: "",
-        city: "",
-        address: "",
-        description: "",
-        gerantId: "",
+    const [selectedUser, setUser] = React.useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        role: "",
         isDeleted: false
     });
     const [loading, setLoading] = React.useState(true);
@@ -64,54 +61,61 @@ function DashboardAdmin() {
       };
 
     // TABLE COLUMNS
-    const facilitiesColumns = [
+    const usersColumns = [
         {
           title: 'Id',
           dataIndex: 'id',
           key: 'id',
           ellipsis: true,
+          responsive: ['md','xs'],
           ...GetColumnSearchProps('id', handleSearch, handleReset, state, setState),
         },
         {
           title: 'Nom',
-          dataIndex: 'name',
-          key: 'name',
-          ...GetColumnSearchProps('name', handleSearch, handleReset, state, setState),
+          dataIndex: 'lastName',
+          key: 'lastName',
+          responsive: ['md','xs'],
+          ...GetColumnSearchProps('lastName', handleSearch, handleReset, state, setState),
         },
         {
-          title: 'Ville',
-          dataIndex: 'city',
-          key: 'city',
-          ...GetColumnSearchProps('city', handleSearch, handleReset, state, setState),
+          title: 'Prénom(s)',
+          dataIndex: 'firstName',
+          key: 'firstName',
+          responsive: ['md','xs'],
+          ...GetColumnSearchProps('firstName', handleSearch, handleReset, state, setState),
         },
         {
-          title: 'Adresse',
-          dataIndex: 'address',
-          key: 'address',
-          ...GetColumnSearchProps('address', handleSearch, handleReset, state, setState),
+          title: 'Email',
+          dataIndex: 'email',
+          key: 'email',
+          responsive: ['md','xs'],
+          ...GetColumnSearchProps('email', handleSearch, handleReset, state, setState),
         },
         {
-          title: 'Description',
-          dataIndex: 'description',
-          key: 'description',
-          ellipsis: true,
-          ...GetColumnSearchProps('description', handleSearch, handleReset, state, setState),
+          title: 'Role',
+          dataIndex: 'role',
+          key: 'role',
+          responsive: ['md','xs'],
+          ...GetColumnSearchProps('role', handleSearch, handleReset, state, setState),
         },
         {
           title: 'Statut',
           dataIndex: 'isDeleted',
           key: 'isDeleted',
+          responsive: ['md','xs'],
         },
         {
           title: 'Dernière MAJ',
           dataIndex: 'updatedAt',
           key: 'updatedAt',
+          responsive: ['md','xs'],
           ...GetColumnSearchProps('updatedAt', handleSearch, handleReset, state, setState),
         },
         {
           title: 'Date de création',
           dataIndex: 'createdAt',
           key: 'createdAt',
+          responsive: ['md','xs'],
           ...GetColumnSearchProps('createdAt', handleSearch, handleReset, state, setState),
         },
         {
@@ -120,14 +124,13 @@ function DashboardAdmin() {
           render: (text, record) => (
             <Space size="middle">
               <Button type="text" onClick={() => {
-                  setFacility({
+                  setUser({
                     id: record.id,
-                    name: record.name,
-                    city: record.city,
-                    address: record.address,
-                    description: record.description,
+                    lastName: record.lastName,
+                    firstName: record.firstName,
+                    role: record.role,
+                    email: record.email,
                     isDeleted: record.isDeleted.props.defaultChecked,
-                    gerantId: "",
                 })
                 setOpenEdit(true)
               }}>Editer</Button>
@@ -137,57 +140,36 @@ function DashboardAdmin() {
     ];
 
     // FORMAT FACILITIES DATA
-    const formatFacilitiesData = (data) => {
+    const formatUsersData = (data) => {
         let formated = [];
-        data.forEach((facility, key) => {
+        data.forEach((user, key) => {
             formated.push({
                 key,
-                id: facility.id,
-                name: facility.name,
-                city: facility.city,
-                address: facility.address,
-                description: facility.description,
+                id: user.id,
+                lastName: user.lastName,
+                firstName: user.firstName,
+                role: user.role,
+                email: user.email,
                 isDeleted: (
                     <Switch 
                     disabled
                     checkedChildren="Inactif" unCheckedChildren="Actif"
-                    defaultChecked={facility.isDeleted} 
+                    defaultChecked={user.isDeleted} 
                     />),
-                updatedAt: new Date(facility.updatedAt).toLocaleString(),
-                createdAt: new Date(facility.createdAt).toLocaleString(),
+                updatedAt: new Date(user.updatedAt).toLocaleString(),
+                createdAt: new Date(user.createdAt).toLocaleString(),
             })
         })
         return formated
     }
 
     // GET FACILITIES
-    const getFacilities = async () => {
+    const getUsers = async () => {
         setLoading(true)
         try {
-            const response = await GetAllFacilities()
+            const response = await GetAllUser()
             const {data} = response.data;
-            setFacilities(formatFacilitiesData(data))
-        } catch (error) {
-            setMessage({
-                type: "error",
-                show: true,
-                content: error.response?.data?.error || error.message
-            })
-            console.error(error.response?.data?.error || error.message)
-        }finally{
-            setTimeout(() => {
-                setLoading(false)
-            }, 500);
-        }
-    }
-
-    // GET FACILITIES
-    const getUsersGerants = async () => {
-        setLoading(true)
-        try {
-            const response = await GetGerants()
-            const {data} = response.data;
-            setUsers(data)
+            setUsers(formatUsersData(data))
         } catch (error) {
             setMessage({
                 type: "error",
@@ -203,8 +185,7 @@ function DashboardAdmin() {
     }
 
     React.useState(() => {
-        getFacilities()
-        getUsersGerants()
+        getUsers()
     }, [userInfos])
 
 
@@ -215,32 +196,15 @@ function DashboardAdmin() {
                     title={
                        loading ? (<Skeleton.Input active block size="large"/>) 
                       : (
-                        <h2 className="main-title"><RiLayout2Line className="nav-icon" /> Tableau de bord </h2>
+                        <h2 className="main-title"><MdSupervisedUserCircle className="nav-icon" /> Gestion des utilisateurs </h2>
                     )}
-                    extra={[
-                      <Button key="1" size="large"
-                      onClick={() => {
-                        console.log('fired in')
-                      }}>
-                        Mes informations
-                      </Button>,
-                    ]}
                 />
                 <div className="container">
                     { loading ? (<Skeleton active block size="large"/>) 
                       : (
-                        <>
-                        <p className="sub-infos">
-                            <span className="lastname"><b>Nom :</b> {userInfos?.lastName}</span>
-                            <span className="firstname"><b>Prénom(s) :</b> {userInfos?.firstName}</span>
-                            <span className="email"><b>Email :</b> {userInfos?.email}</span>
-                            <span className="email"><b>role :</b> Administrateur</span>
-                            <span className="date-creation"><b>Date de création :</b> {new Date(userInfos.createdAt).toLocaleString()}</span>
-                        </p>
-                        <Divider dashed />
-                        
+                        <>                        
                         <div className="title">
-                            <h3>Liste des établissements ({facilities?.length})</h3>
+                            <h3> Liste des utilisateurs ({users?.length})</h3>
                             <div className="actions-group">
                             <Tooltip title="Nouveau">
                                 <Button type="default" size="large" shape="shape" icon={<BiPlusCircle />} onClick={() => {
@@ -251,7 +215,7 @@ function DashboardAdmin() {
                             </Tooltip>
                             <Tooltip title="Rafraichir">
                                 <Button type="default" size="large" shape="shape" icon={<BiRefresh />} onClick={() => {
-                                getFacilities()
+                                getUsers()
                                 }}>
                                 Rafraichir
                             </Button>   
@@ -282,31 +246,29 @@ function DashboardAdmin() {
                             <Skeleton active block size="large"/>
                         ) : 
                         (
-                            <Table dataSource={facilities} columns={facilitiesColumns}/>
+                            <Table dataSource={users} columns={usersColumns}/>
                         )}
                         </>
                     )}
                     {openEdit && (
-                    <EditFacility 
+                    <EditUser 
                     open={openEdit} 
-                    facility={selectedFacility}
-                    users={users}
+                    user={selectedUser}
                     handleClose={() => {
                         setOpenEdit(false)
-                        getFacilities()
+                        getUsers()
                     }} />)}
 
                     {openCreate && (
-                    <CreateFacility 
+                    <CreateUser 
                     open={openCreate} 
-                    users={users}
                     handleClose={() => {
                         setOpenCreate(false)
-                        getFacilities()
+                        getUsers()
                     }} />)}
                 </div>
         </section>
     );
 }
 
-export default DashboardAdmin;
+export default UsersAdmin;

@@ -10,7 +10,7 @@
   return Axios.post(MESSAGES_URL, formData);
  }
 
- export function GetAll() {
+ export function GetAllMessags() {
    return Axios.get(MESSAGES_URL);
  }
 

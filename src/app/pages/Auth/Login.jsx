@@ -25,7 +25,6 @@ function Login() {
             try {
                 const response = await LoginRequest({email, password})
                 const {data} = response;
-                console.log(response.data)
                 dispatch({ type: ActionTypes.login, accessToken: data.accessToken });
                 navigate('/', { replace: true });
             } catch (error) {

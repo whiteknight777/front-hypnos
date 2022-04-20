@@ -43,7 +43,7 @@ function SecurtityGuard(props) {
         // eslint-disable-next-line
     }, [isAuthorized, accessToken, dispatch]);  
 
-    return showLoaderScreen ? <Loader /> : <Guard userStore={userStore}>{props.component}</Guard>;
+    return showLoaderScreen ? <Loader /> : <Guard userStore={userStore} accessToken={accessToken}>{props.component}</Guard>;
 }
 
 
@@ -52,10 +52,9 @@ function SecurtityGuard(props) {
 * Check if path contain key words (admin, gerant, user)
 * redirect to content or redirect to 403 error page
 */
-const Guard = ({children, userStore}) => {
+const Guard = ({children, userStore, accessToken}) => {
     const {pathname} = document.location
     const { isAuthorized, userInfos } = userStore;
-    const accessToken = sessionStorage.getItem('accessToken');
     // console.log(userInfos)
     const checkPath = () => {
         if(pathname.search('/admin') === -1 
