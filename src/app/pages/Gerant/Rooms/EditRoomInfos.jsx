@@ -6,44 +6,36 @@ import {
     Alert,
     Form,
     Spin,
-    Drawer
 } from 'antd';
-import FacilitySchema from '../../../validatorSchema/facilitySchema';
+import RoomSchema from '../../../validatorSchema/roomSchema';
 import { useFormik } from 'formik';
-import { UpdateFacility } from '../../../../utils/requests/facilities';
+import { UpdateRoom } from '../../../../utils/requests/rooms';
 import '../main.scss';
 
-const EditFacility = ({facility, open, users, handleClose}) => {
+const EditRoomInfos = ({room, facility}) => {
     const [isSuccess, setSuccess] = React.useState(undefined);
     const [form] = Form.useForm();
     const initialValues = {
-        name: facility?.name,
-        city: facility?.city,
-        address: facility?.address,
-        description: facility?.description,
-        isDeleted: facility?.isDeleted,
-        gerantId: facility?.gerantId,
+        title: room.title,
+        description: room.description,
+        price: room.price,
+        isDeleted: false
     }
-
-    console.log(facility?.isDeleted)
     
     const formik = useFormik({
         initialValues: initialValues,
-        validationSchema: FacilitySchema,
-        onSubmit: async (values, { setStatus, setSubmitting, resetForm, ...args }) => {
+        validationSchema: RoomSchema,
+        onSubmit: async (values, { setStatus, setSubmitting, resetForm }) => {
             setSubmitting(true)
-            values.gerantId = values.gerantId !== "" ? values.gerantId : null;
             console.log(values)
+            values.price = parseFloat(values.price)
+            values.facilityId = facility.id
             try {
-                const response = await UpdateFacility(facility.id, values)
+                const response = await UpdateRoom(room.id, values)
                 const {data} = response;
                 console.log(data)
                 setSuccess(true)
                 setStatus("Mise à jours effectuée")
-                console.log(args)
-                setTimeout(() => {
-                  resetForm()
-                }, 4000)
             } catch (error) {
                 console.error(error.message)
                 setSuccess(false)
@@ -58,25 +50,17 @@ const EditFacility = ({facility, open, users, handleClose}) => {
     }, [formik.values, initialValues])
 
     return (
-        <Drawer
-            id="edit"
-            title={`Détails ${facility.name}`}
-            placement={"right"}
-            width={700}
-            onClose={() => {
-                handleClose()
-                formik.resetForm()
-            }}
-            visible={open}
-        >
-            <section className="edit-content">
-                
+        <section className="edit-content">
                 {formik.status && (
                     <Alert
                         className="alert-box"
                         message={isSuccess === true ? "Succès" : "Erreur"}
                         description={formik.status}
                         type={isSuccess === true ? "success" : "error"}
+                        closable
+                        onClose={() => {
+                            formik.setStatus(null)
+                        }}
                         showIcon
                     />
                 )}
@@ -90,31 +74,22 @@ const EditFacility = ({facility, open, users, handleClose}) => {
                     <Form.Item label="Nom">
                         <Input 
                             placeholder="Nom" 
-                            name="name"
-                            defaultValue={formik.values.name}
-                            {...formik.getFieldProps('name')}
+                            name="title"
+                            defaultValue={formik.values.title}
+                            {...formik.getFieldProps('title')}
                         />
-                        {formik.touched.name && formik.errors.name ? (
+                        {formik.touched.title && formik.errors.title ? (
                             <div className="form-error">
-                                <div className="help-block">{formik.errors.name}</div>
+                                <div className="help-block">{formik.errors.title}</div>
                             </div>
                         ) : null}
                     </Form.Item>
-                    <Form.Item label="Ville">
-                        <Input placeholder="Ville" name="city"
-                            {...formik.getFieldProps('city')}/>
-                        {formik.touched.city && formik.errors.city ? (
+                    <Form.Item label="Prix">
+                        <Input placeholder="Prix" name="price"
+                            {...formik.getFieldProps('price')}/>
+                        {formik.touched.price && formik.errors.price ? (
                             <div className="form-error">
-                                <div className="help-block">{formik.errors.city}</div>
-                            </div>
-                        ) : null}
-                    </Form.Item>
-                    <Form.Item label="Adresse">
-                        <Input placeholder="Adresse" name="address"
-                            {...formik.getFieldProps('address')}/>
-                        {formik.touched.address && formik.errors.address ? (
-                            <div className="form-error">
-                                <div className="help-block">{formik.errors.address}</div>
+                                <div className="help-block">{formik.errors.price}</div>
                             </div>
                         ) : null}
                     </Form.Item>
@@ -129,22 +104,6 @@ const EditFacility = ({facility, open, users, handleClose}) => {
                         {formik.touched.isDeleted && formik.errors.isDeleted ? (
                             <div className="form-error">
                                 <div className="help-block">{formik.errors.isDeleted}</div>
-                            </div>
-                        ) : null}
-                    </Form.Item>
-                    <Form.Item label="Gérant">
-                        <select className="ant-input" 
-                        name="gerantId"
-                        {...formik.getFieldProps('gerantId')} 
-                        >
-                        <option value={""}>Selectionnez un gérant</option>
-                        {users && users.map(item => (
-                            <option key={`option-${item.id}`} value={item.id}>{`${item.lastName} ${item.firstName}`}</option>
-                        ))}
-                        </select>
-                        {formik.touched.gerantId && formik.errors.gerantId ? (
-                            <div className="form-error">
-                                <div className="help-block">{formik.errors.gerantId}</div>
                             </div>
                         ) : null}
                     </Form.Item>
@@ -170,9 +129,8 @@ const EditFacility = ({facility, open, users, handleClose}) => {
                     </Form.Item>
                 </Form>
             </section>
-        </Drawer>
     )
 
 }
 
-export default EditFacility;
+export default EditRoomInfos;

@@ -9,18 +9,21 @@ import {
     Tooltip,
     Table
   } from 'antd';
-  import { UserContext } from '../../../contexts/userProvider';
-  import { GetAllClient, PatchBooking } from '../../../utils/requests/bookings';
-  import GetColumnSearchProps from '../../components/ColumnSearch/ColumnSearch';
+  import { UserContext } from '../../../../contexts/userProvider';
+  import { GetGerantFacility } from '../../../../utils/requests/facilities';
+  import { GetFacilityBookings } from '../../../../utils/requests/bookings';
+  import GetColumnSearchProps from '../../../components/ColumnSearch/ColumnSearch';
   import {BiRefresh} from 'react-icons/bi';
-//   import Moment from 'react-moment';
-  import './Dashboard.scss';
+import { RiLayout2Line } from 'react-icons/ri';
+import '../main.scss';
 
-function DashboardClient() {
+function DashboardGerant() {
     
     const { userStore } = React.useContext(UserContext);
     const { userInfos } = userStore;
+    const [facility, setFacility] = React.useState({});
     const [bookings, setBookings] = React.useState([]);
+
     const [loading, setLoading] = React.useState(true);
     const [message, setMessage] = React.useState({
         type: "",
@@ -49,7 +52,7 @@ function DashboardClient() {
       };
 
     // TABLE COLUMNS
-    const columns = [
+    const bookingColumns = [
         {
           title: 'Etablissement',
           dataIndex: 'facility',
@@ -100,33 +103,9 @@ function DashboardClient() {
         },
     ];
 
-    const disableBooking = async (checked, booking) => {
-        setLoading(true)
-        try {
-            await PatchBooking(booking.id, {isDeleted: !checked})
-            setMessage({
-                type: "success",
-                show: true,
-                content: "Modification effectuée !"
-            })
-            getClientBookings()
-        } catch (error) {
-            setMessage({
-                type: "error",
-                show: true,
-                content: error.response?.data?.message || error.message
-            })
-            console.error(error.response?.data?.message || error.message)
-        }finally{
-            setTimeout(() => {
-                setLoading(false)
-            }, 500);
-        }
-    }
-
-    const formatData = (data) => {
+    // FORMAT BOOKING DATA
+    const formatBookingData = (data) => {
         let formated = [];
-        const uday = new Date();
         data.forEach((booking, key) => {
             formated.push({
                 key,
@@ -137,10 +116,9 @@ function DashboardClient() {
                 days: booking.days,
                 isDeleted: (
                     <Switch 
-                    checkedChildren="" unCheckedChildren="Annulé"
-                    disabled={uday > new Date(booking.startDate)}
-                    defaultChecked={!booking.isDeleted} 
-                    onChange={(checked) => disableBooking(checked, booking)} 
+                    checkedChildren="Annulé" unCheckedChildren="En cours"
+                    disabled
+                    defaultChecked={booking.isDeleted} 
                     />),
                 updatedAt: new Date(booking.updatedAt).toLocaleString(),
                 createdAt: new Date(booking.createdAt).toLocaleString(),
@@ -149,12 +127,35 @@ function DashboardClient() {
         return formated
     }
 
-    const getClientBookings = async () => {
+    // GET FACILITIES
+    const getFacilityBookings = async (facilityId) => {
         setLoading(true)
         try {
-            const response = await GetAllClient(userInfos?.id)
+            const response = await GetFacilityBookings(facilityId)
             const {data} = response.data;
-            setBookings(formatData(data))
+            setBookings(formatBookingData(data))
+        } catch (error) {
+            setMessage({
+                type: "error",
+                show: true,
+                content: error.response?.data?.error || error.message
+            })
+            console.error(error.response?.data?.error || error.message)
+        }finally{
+            setTimeout(() => {
+                setLoading(false)
+            }, 500);
+        }
+    }
+
+    // GET FACILITIES
+    const getFacilityInfo = async () => {
+        setLoading(true)
+        try {
+            const response = await GetGerantFacility(userInfos.id)
+            const {data} = response.data;
+            setFacility(data)
+            getFacilityBookings(data.id)
         } catch (error) {
             setMessage({
                 type: "error",
@@ -170,7 +171,7 @@ function DashboardClient() {
     }
 
     React.useState(() => {
-        getClientBookings()
+        getFacilityInfo()
     }, [userInfos])
 
 
@@ -181,7 +182,7 @@ function DashboardClient() {
                     title={
                        loading ? (<Skeleton.Input active block size="large"/>) 
                       : (
-                        <h2 className="main-title">Mon compte </h2>
+                        <h2 className="main-title"><RiLayout2Line className="nav-icon" /> Tableau de bord </h2>
                     )}
                     extra={[
                       <Button key="1" size="large"
@@ -196,33 +197,41 @@ function DashboardClient() {
                     { loading ? (<Skeleton active block size="large"/>) 
                       : (
                         <>
-                        <p className="sub-infos">
-                            <span className="lastname"><b>Nom :</b> {userInfos?.lastName}</span>
-                            <span className="firstname"><b>Prénom(s) :</b> {userInfos?.firstName}</span>
-                            <span className="email"><b>Email :</b> {userInfos?.email}</span>
-                            <span className="date-creation"><b>Date de création :</b> {new Date(userInfos.createdAt).toLocaleString()}</span>
-                        </p>
+                        <div className="informations">
+                            <p className="sub-infos">
+                                <span className="lastname"><b>Nom :</b> {userInfos?.lastName}</span>
+                                <span className="firstname"><b>Prénom(s) :</b> {userInfos?.firstName}</span>
+                                <span className="email"><b>Email :</b> {userInfos?.email}</span>
+                                <span className="role"><b>role :</b> Gérant</span>
+                                <span className="date-creation"><b>Date de création :</b> {new Date(userInfos.createdAt).toLocaleString()}</span>
+                            </p>
+                            
+                            <p className="sub-infos-facility">
+                                <span className="facility"><b>Etablissement </b> {facility?.name} :</span>
+                                <span className="rooms"><b>Nombre de chambres </b> {facility?.rooms.length} :</span>
+                            </p>
+                        </div>
                         <Divider dashed />
-                    
+                        
                         <div className="title">
-                            <h3>Mes réservations ({bookings?.length})</h3>
+                            <h3>Liste des Réservations ({bookings?.length})</h3>
                             <div className="actions-group">
                             <Tooltip title="Rafraichir">
                                 <Button type="default" size="large" shape="shape" icon={<BiRefresh />} onClick={() => {
-                                getClientBookings()
+                                getFacilityBookings(facility.id)
                                 }}>
                                 Rafraichir
                             </Button>   
                             </Tooltip>
                             </div>
                         </div>
-                        {message.show && (
+                        {message?.show && (
                             <>
                             <Alert
                                 className="alert-box"
-                                message={message.type}
-                                description={message.content}
-                                type={message.type}
+                                message={message?.type}
+                                description={message?.content}
+                                type={message?.type}
                                 closable
                                 onClose={() => {
                                     setMessage({
@@ -240,14 +249,13 @@ function DashboardClient() {
                             <Skeleton active block size="large"/>
                         ) : 
                         (
-                            <Table dataSource={bookings} columns={columns}/>
+                            <Table dataSource={bookings} columns={bookingColumns}/>
                         )}
                         </>
                     )}
-                    
                 </div>
         </section>
     );
 }
 
-export default DashboardClient;
+export default DashboardGerant;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
 import {adminUrls, gerantUrls, clientUrls} from '../PrivateRoutes'
 import {ImHome} from 'react-icons/im'
 import { UserContext } from '../../../contexts/userProvider';
@@ -11,9 +11,11 @@ function Nav() {
   
   const { userStore } = React.useContext(UserContext);
   const { userInfos } = userStore;
+  const isMounted = React.useRef(false);
   const location = useLocation(); 
+  const nav = useNavigate()
   const [currentKey, setKey] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
+  // const [loading, setLoading] = React.useState(true)
 
   const dynamicNav = () => {
     switch (userInfos?.role) {
@@ -32,13 +34,13 @@ function Nav() {
   // console.log(loading)
 
   const getActiveKey = () => {
-    setLoading(true)
     const urls = dynamicNav();
     let current = 0;
     if(urls.length === 0) {
-      console.log(userStore)
       setKey([current.toString()])
-      setLoading(false)
+      if(location.pathname !== '/' && userInfos === undefined){
+        nav('/')
+      }
     }else{
       urls.forEach((item, key) => {
         if(location.pathname === item.url){
@@ -47,20 +49,27 @@ function Nav() {
       });
       if([current.toString()] !== currentKey){
         setKey([current.toString()])
-        setLoading(false)
       }
     }
   }
 
   React.useEffect(() => {
-    getActiveKey()
+    isMounted.current = true;
+    if(isMounted.current){
+      getActiveKey()
+    }
     // eslint-disable-next-line
-  }, [userStore])
+    return () => {
+      isMounted.current = false;
+    }
+    
+    //eslint-disable-next-line
+  }, [userInfos, userStore])
 
   return ( 
       <Sider trigger={null} className="sider-nav">
         <div className="logo"/>
-        {!loading ? (
+        {isMounted.current ? (
         <Menu theme="light" mode="inline" defaultSelectedKeys={currentKey} className="main-nav">
           <Menu.Item key="0" icon={<ImHome className="nav-icon" />}>
             <Link to="/">Accueil</Link>

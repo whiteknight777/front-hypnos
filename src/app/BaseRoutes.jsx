@@ -7,12 +7,18 @@ import { Routes, Route } from 'react-router-dom';
 import SecurtityGuard from './pages/Auth/SecurtityGuard';
 
 const Home = lazy(() => import('./pages/Home/Home'));
-
+// ***************** ADMIN ************************
 const DashboardAdmin = lazy(() => import('./pages/Admin/Dashboard/Dashboard'));
 const UsersAdmin = lazy(() => import('./pages/Admin/Users/UsersAdmin'));
 const MessagesAdmin = lazy(() => import('./pages/Admin/Messages/MessagesAdmin'));
-
+// ************************************************
+// ***************** GERANT ************************
+const DashboardGerant = lazy(() => import('./pages/Gerant/Dashboard/Dashboard'));
+const RoomsGerant = lazy(() => import('./pages/Gerant/Rooms/RoomsGerant'));
+// ************************************************
+// ***************** CLIENT ************************
 const DashboardClient = lazy(() => import('./pages/Client/Dashboard'));
+// ************************************************
 const Facilities = lazy(() => import('./pages/Facilities/Facilities'));
 const Login = lazy(() => import('./pages/Auth/Login'));
 const SignIn = lazy(() => import('./pages/Auth/SignIn'));
@@ -33,6 +39,10 @@ export function BaseRoutes() {
                 <Route path="/admin/utilisateurs" element={<SecurtityGuard component={<UsersAdmin />}/>}/>
                 <Route path="/admin/messages" element={<SecurtityGuard component={<MessagesAdmin />}/>}/>
                 {/* END ADMIN */}
+                {/* GERANT */}
+                <Route path="/gerant/tableau-de-bord" element={<SecurtityGuard component={<DashboardGerant />}/>}/>
+                <Route path="/gerant/suites" element={<SecurtityGuard component={<RoomsGerant />}/>}/>
+                {/* END GERANT */}
                 <Route path="/client" element={<SecurtityGuard component={<DashboardClient />}/>}>
                     <Route path="mon-compte" element={<SecurtityGuard component={<DashboardClient />}/>}/>
                 </Route>

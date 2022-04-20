@@ -22,6 +22,10 @@
   return Axios.get(`${BOOKINGS_URL}/${params}`);
  }
  
+ export function GetFacilityBookings(params) {
+  return Axios.get(`${BOOKINGS_URL}/facility/${params}`);
+ }
+ 
  export function PatchBooking(params, formData) {
   return Axios.patch(`${BOOKINGS_URL}/${params}`, formData);
  }

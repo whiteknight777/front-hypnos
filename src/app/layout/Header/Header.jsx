@@ -184,7 +184,7 @@ function HeaderMenu() {
                 onOk={()=> {
                     handleOk()
                 }}
-                okText="Se déconnecter"
+                okText="Déconnexion"
                 cancelText="Annuler"
                 confirmLoading={loading}
                 onCancel={handleCancel}

@@ -1,4 +1,4 @@
-import { MdSupervisedUserCircle } from 'react-icons/md';
+import { MdBedroomParent, MdSupervisedUserCircle } from 'react-icons/md';
 import { BsChatTextFill } from 'react-icons/bs';
 import {RiLayout2Line} from 'react-icons/ri';
 
@@ -28,6 +28,11 @@ export const gerantUrls = [
       name: "Tableau de bord", 
       url:"/gerant/tableau-de-bord", 
       icon: <RiLayout2Line className="nav-icon" />
+    },
+    {
+      name: "Suites", 
+      url:"/gerant/suites", 
+      icon: <MdBedroomParent className="nav-icon" />
     }
 ]
 

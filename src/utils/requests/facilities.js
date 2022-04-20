@@ -17,6 +17,10 @@
   return Axios.get(`${FACILITIES_URL}/${params}`);
  }
 
+ export function GetGerantFacility(params) {
+  return Axios.get(`${FACILITIES_URL}/gerant/${params}`);
+ }
+
  export function UpdateFacility(params, formData) {
   return Axios.put(`${FACILITIES_URL}/${params}`, formData);
  }
